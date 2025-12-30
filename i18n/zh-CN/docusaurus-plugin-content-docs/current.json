@@ -1,0 +1,50 @@
+{
+  "sidebar.tutorialsSidebar.category.Getting Started": {
+    "message": "快速开始",
+    "description": "侧边栏教程分类标签：快速开始"
+  },
+  "sidebar.tutorialsSidebar.category.Core Features": {
+    "message": "核心功能",
+    "description": "侧边栏教程分类标签：核心功能"
+  },
+  "sidebar.tutorialsSidebar.category.Advanced Topics": {
+    "message": "高级主题",
+    "description": "侧边栏教程分类标签：高级主题"
+  },
+  "sidebar.apiSidebar.category.Authentication & Authorization": {
+    "message": "认证与授权",
+    "description": "侧边栏API分类标签：认证与授权"
+  },
+  "sidebar.apiSidebar.category.Cluster Management": {
+    "message": "集群管理",
+    "description": "侧边栏API分类标签：集群管理"
+  },
+  "sidebar.apiSidebar.category.Node Management": {
+    "message": "节点管理",
+    "description": "侧边栏API分类标签：节点管理"
+  },
+  "sidebar.apiSidebar.category.Virtual Machine Management": {
+    "message": "虚拟机管理",
+    "description": "侧边栏API分类标签：虚拟机管理"
+  },
+  "sidebar.apiSidebar.category.Storage Management": {
+    "message": "存储管理",
+    "description": "侧边栏API分类标签：存储管理"
+  },
+  "sidebar.apiSidebar.category.Template Management": {
+    "message": "模板管理",
+    "description": "侧边栏API分类标签：模板管理"
+  },
+  "sidebar.architectureSidebar.category.System Architecture": {
+    "message": "系统架构",
+    "description": "侧边栏架构分类标签：系统架构"
+  },
+  "sidebar.architectureSidebar.category.Design Patterns": {
+    "message": "设计模式",
+    "description": "侧边栏架构分类标签：设计模式"
+  },
+  "sidebar.architectureSidebar.category.Deployment Architecture": {
+    "message": "部署架构",
+    "description": "侧边栏架构分类标签：部署架构"
+  }
+}

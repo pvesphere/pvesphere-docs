@@ -1,0 +1,43 @@
+{
+  "link.title.Docs": {
+    "message": "文档",
+    "description": "页脚链接列标题：文档"
+  },
+  "link.title.Community": {
+    "message": "社区",
+    "description": "页脚链接列标题：社区"
+  },
+  "link.title.More": {
+    "message": "更多",
+    "description": "页脚链接列标题：更多"
+  },
+  "link.item.label.Tutorials": {
+    "message": "教程",
+    "description": "页脚链接标签：教程"
+  },
+  "link.item.label.API Documentation": {
+    "message": "API 文档",
+    "description": "页脚链接标签：API 文档"
+  },
+  "link.item.label.Architecture": {
+    "message": "架构设计",
+    "description": "页脚链接标签：架构设计"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "页脚链接标签：GitHub"
+  },
+  "link.item.label.Issues": {
+    "message": "问题反馈",
+    "description": "页脚链接标签：问题反馈"
+  },
+  "link.item.label.Proxmox VE": {
+    "message": "Proxmox VE",
+    "description": "页脚链接标签：Proxmox VE"
+  },
+  "link.item.label.License": {
+    "message": "许可证",
+    "description": "页脚链接标签：许可证"
+  }
+}
+

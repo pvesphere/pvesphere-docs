@@ -1,0 +1,23 @@
+{
+  "title": {
+    "message": "PveSphere",
+    "description": "The title in the navbar"
+  },
+  "item.label.教程": {
+    "message": "教程",
+    "description": "Navbar item with label 教程"
+  },
+  "item.label.API": {
+    "message": "API",
+    "description": "Navbar item with label API"
+  },
+  "item.label.架构": {
+    "message": "架构",
+    "description": "Navbar item with label 架构"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
+

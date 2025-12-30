@@ -1,0 +1,42 @@
+{
+  "homepage.tagline": {
+    "message": "Comprehensive Management Platform for Proxmox VE Clusters",
+    "description": "Homepage tagline"
+  },
+  "homepage.features.title.Multi-Cluster Management": {
+    "message": "Multi-Cluster Management",
+    "description": "Title of feature Multi-Cluster Management on homepage"
+  },
+  "homepage.features.description.Multi-Cluster Management": {
+    "message": "Supports unified management of multiple Proxmox VE clusters through centralized authentication and configuration, simplifying the complexity of managing distributed PVE environments.",
+    "description": "Description of feature Multi-Cluster Management on homepage"
+  },
+  "homepage.features.title.Real-time Monitoring": {
+    "message": "Real-time Monitoring",
+    "description": "Title of feature Real-time Monitoring on homepage"
+  },
+  "homepage.features.description.Real-time Monitoring": {
+    "message": "Provides real-time resource monitoring and metrics visualization, including CPU, memory, storage usage, as well as hotspot and risk alert functionality.",
+    "description": "Description of feature Real-time Monitoring on homepage"
+  },
+  "homepage.features.title.Complete Lifecycle Management": {
+    "message": "Complete Lifecycle Management",
+    "description": "Title of feature Complete Lifecycle Management on homepage"
+  },
+  "homepage.features.description.Complete Lifecycle Management": {
+    "message": "Supports complete virtual machine lifecycle management, including create, start, stop, migrate, backup and restore, as well as template management and automated deployment.",
+    "description": "Description of feature Complete Lifecycle Management on homepage"
+  },
+  "homepage.demo.title": {
+    "message": "Feature Demo",
+    "description": "Title of demo section on homepage"
+  },
+  "homepage.demo.description": {
+    "message": "PveSphere provides an intuitive web interface that makes it easy to manage multiple Proxmox VE clusters. Monitor resources, manage virtual machines, and configure storage from a unified dashboard - everything at your fingertips.",
+    "description": "Description of demo section on homepage"
+  },
+  "homepage.cta.button": {
+    "message": "Get Started - 5min ⏱️",
+    "description": "Button text on homepage"
+  }
+}

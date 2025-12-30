@@ -1,0 +1,52 @@
+{
+  "sidebar.tutorialsSidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category Getting Started in sidebar tutorialsSidebar"
+  },
+  "sidebar.tutorialsSidebar.category.Core Features": {
+    "message": "Core Features",
+    "description": "The label for category Core Features in sidebar tutorialsSidebar"
+  },
+  "sidebar.tutorialsSidebar.category.Advanced Topics": {
+    "message": "Advanced Topics",
+    "description": "The label for category Advanced Topics in sidebar tutorialsSidebar"
+  },
+  "sidebar.apiSidebar.category.Authentication & Authorization": {
+    "message": "Authentication & Authorization",
+    "description": "The label for category Authentication & Authorization in sidebar apiSidebar"
+  },
+  "sidebar.apiSidebar.category.Cluster Management": {
+    "message": "Cluster Management",
+    "description": "The label for category Cluster Management in sidebar apiSidebar"
+  },
+  "sidebar.apiSidebar.category.Node Management": {
+    "message": "Node Management",
+    "description": "The label for category Node Management in sidebar apiSidebar"
+  },
+  "sidebar.apiSidebar.category.Virtual Machine Management": {
+    "message": "Virtual Machine Management",
+    "description": "The label for category Virtual Machine Management in sidebar apiSidebar"
+  },
+  "sidebar.apiSidebar.category.Storage Management": {
+    "message": "Storage Management",
+    "description": "The label for category Storage Management in sidebar apiSidebar"
+  },
+  "sidebar.apiSidebar.category.Template Management": {
+    "message": "Template Management",
+    "description": "The label for category Template Management in sidebar apiSidebar"
+  },
+  "sidebar.architectureSidebar.category.System Architecture": {
+    "message": "System Architecture",
+    "description": "The label for category System Architecture in sidebar architectureSidebar"
+  },
+  "sidebar.architectureSidebar.category.Design Patterns": {
+    "message": "Design Patterns",
+    "description": "The label for category Design Patterns in sidebar architectureSidebar"
+  },
+  "sidebar.architectureSidebar.category.Deployment Architecture": {
+    "message": "Deployment Architecture",
+    "description": "The label for category Deployment Architecture in sidebar architectureSidebar"
+  }
+}
+
+

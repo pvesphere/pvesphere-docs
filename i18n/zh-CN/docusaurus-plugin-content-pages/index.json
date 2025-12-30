@@ -1,0 +1,11 @@
+{
+  "title": {
+    "message": "PveSphere - Proxmox VE 集群综合管理平台",
+    "description": "首页标题"
+  },
+  "description": {
+    "message": "PveSphere 是一个基于 Web 的 Proxmox VE (PVE) 集群综合管理平台。",
+    "description": "首页描述"
+  }
+}
+

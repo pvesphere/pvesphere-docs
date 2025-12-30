@@ -1,0 +1,42 @@
+{
+  "homepage.tagline": {
+    "message": "Proxmox VE 集群综合管理平台",
+    "description": "首页标语"
+  },
+  "homepage.features.title.Multi-Cluster Management": {
+    "message": "多集群管理",
+    "description": "首页功能特性标题：多集群管理"
+  },
+  "homepage.features.description.Multi-Cluster Management": {
+    "message": "支持统一管理多个 Proxmox VE 集群，通过集中式身份验证和配置，简化分布式 PVE 环境的管理复杂性。",
+    "description": "首页功能特性描述：多集群管理"
+  },
+  "homepage.features.title.Real-time Monitoring": {
+    "message": "实时监控",
+    "description": "首页功能特性标题：实时监控"
+  },
+  "homepage.features.description.Real-time Monitoring": {
+    "message": "提供实时资源监控和指标可视化，包括 CPU、内存、存储使用情况，以及热点和风险告警功能。",
+    "description": "首页功能特性描述：实时监控"
+  },
+  "homepage.features.title.Complete Lifecycle Management": {
+    "message": "完整生命周期管理",
+    "description": "首页功能特性标题：完整生命周期管理"
+  },
+  "homepage.features.description.Complete Lifecycle Management": {
+    "message": "支持虚拟机的完整生命周期管理，包括创建、启动、停止、迁移、备份和恢复，以及模板管理和自动化部署。",
+    "description": "首页功能特性描述：完整生命周期管理"
+  },
+  "homepage.demo.title": {
+    "message": "功能演示",
+    "description": "首页演示区域标题"
+  },
+  "homepage.demo.description": {
+    "message": "PveSphere 提供了直观的 Web 界面，让您轻松管理多个 Proxmox VE 集群。从统一的仪表板监控资源、管理虚拟机、配置存储，一切尽在掌握。",
+    "description": "首页演示区域描述"
+  },
+  "homepage.cta.button": {
+    "message": "快速开始 - 5分钟 ⏱️",
+    "description": "首页按钮文字"
+  }
+}

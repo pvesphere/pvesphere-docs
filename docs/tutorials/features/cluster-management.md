@@ -4,6 +4,8 @@ Cluster management allows you to add, configure, and manage multiple Proxmox VE 
 
 ## Adding a Cluster
 
+![Add Cluster](/img/2.cluster_add.png)
+
 ### Basic Information
 
 - **Cluster Name**: Unique identifier for the cluster

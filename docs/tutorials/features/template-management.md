@@ -4,6 +4,8 @@ Template management allows you to import, sync, and manage virtual machine templ
 
 ## Template List
 
+![Template List](/img/7.template_list.png)
+
 The template list displays all available templates:
 
 - **Template Name**: Identifier of the template
@@ -31,6 +33,8 @@ Supports cross-node template synchronization:
 4. Execute synchronization
 
 ### Template Instance Management
+
+![Template Detail](/img/8.template_detail.png)
 
 You can view and manage virtual machine instances created from templates:
 

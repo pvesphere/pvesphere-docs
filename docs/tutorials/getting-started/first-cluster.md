@@ -42,7 +42,7 @@ Before filling in cluster information, you need to obtain a Proxmox VE API Token
 7. Click **Add** to create the token
 8. Record the generated token value (format: `username!TokenName=TokenValue`)
 
-![Proxmox API Token Add Interface](/img/pvesphere-review-rc01.gif)
+![Proxmox API Token Add Interface](/img/get-pve-api-token.png)
 
 #### Method 2: Get via Proxmox CLI
 

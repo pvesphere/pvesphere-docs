@@ -4,6 +4,8 @@ Node management allows you to monitor and manage physical nodes in Proxmox VE cl
 
 ## Node List
 
+![Node List](/img/3.node_list.png)
+
 The node list displays information about all nodes in all clusters:
 
 - **Node Name**: Identifier of the node
@@ -17,6 +19,8 @@ The node list displays information about all nodes in all clusters:
 
 ### View Node Details
 
+![Node Detail](/img/4.node_detail.png)
+
 Click the node name to view detailed information:
 
 - Hardware information
@@ -24,7 +28,11 @@ Click the node name to view detailed information:
 - Network configuration
 - Service status
 
+![Node Detail View](/img/11.node_detail01.png)
+
 ### Node Console
+
+![Node Console](/img/10.node_console.png)
 
 Access node console via terminal proxy:
 

@@ -2,6 +2,8 @@
 
 The dashboard provides a global overview of the PveSphere system, helping you quickly understand the status of all clusters, nodes, virtual machines, and storage.
 
+![Dashboard Overview](/img/1.overview.png)
+
 ## Feature Overview
 
 ### Resource Statistics

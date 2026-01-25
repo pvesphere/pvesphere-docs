@@ -42,7 +42,7 @@
 7. 点击 **Add** 创建 Token
 8. 记录生成的 Token 值（格式：`用户名!Token名称=Token值`）
 
-![Proxmox API Token 添加界面](/img/pvesphere-review-rc01.gif)
+![Proxmox API Token 添加界面](/img/get-pve-api-token.png)
 
 #### 方法二：通过 Proxmox CLI 获取
 

@@ -4,6 +4,8 @@ Virtual machine management is one of the core features of PveSphere, providing c
 
 ## VM List
 
+![VM List](/img/5.vm_list.png)
+
 The VM list displays all virtual machines in all clusters:
 
 - **Name**: Name and ID of the virtual machine
@@ -11,6 +13,8 @@ The VM list displays all virtual machines in all clusters:
 - **Status**: Running status (Running/Stopped)
 - **Resources**: CPU and memory usage
 - **IP Address**: IP address of the virtual machine
+
+![VM List View](/img/12.vm_list01.png)
 
 ## VM Operations
 
@@ -37,6 +41,8 @@ The VM list displays all virtual machines in all clusters:
 
 ### VM Console
 
+![VM Console](/img/9.vm_console.png)
+
 Access VM console via VNC/NoVNC:
 
 1. Click "Console" in the VM action menu
@@ -59,6 +65,10 @@ Supports online migration of virtual machines to other nodes:
 - **Backup Management**: View and manage all backups
 
 ## Configuration Management
+
+![VM Detail](/img/6.vm_detail.png)
+
+![VM Detail View](/img/8.vm_detail01.png)
 
 ### Hardware Configuration
 

@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-01-25
+
+### 🎉 正式发布版本
+
+PveSphere Documentation v1.0.0 是第一个正式版本的文档站点，与前端 v1.0.0 版本同步发布。
+
+#### ✨ 文档内容
+
+- **快速开始指南**：详细的安装和配置说明
+- **功能教程**：涵盖所有核心功能的使用教程
+- **API 文档**：完整的 RESTful API 参考
+- **架构设计**：系统架构和设计理念说明
+- **部署指南**：Docker、Docker Compose 等多种部署方式
+- **最佳实践**：生产环境使用建议
+
+#### 🔧 技术特性
+
+- 基于 Docusaurus 构建
+- 支持中英文双语
+- 搜索功能完善
+- 响应式设计
+
+---
+
 ## [1.0.0-rc01] - 2026-01-10
 
 ### 🧪 Release Candidate 1
@@ -31,4 +55,5 @@ PveSphere Documentation v1.0.0-rc01 是第一个候选版本的文档站点。
 
 ---
 
+[1.0.0]: https://github.com/pvesphere/pvesphere-docs/releases/tag/v1.0.0
 [1.0.0-rc01]: https://github.com/pvesphere/pvesphere-docs/releases/tag/v1.0.0-rc01

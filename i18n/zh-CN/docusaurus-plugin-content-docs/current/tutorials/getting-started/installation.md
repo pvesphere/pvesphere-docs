@@ -96,129 +96,81 @@ go run cmd/server/main.go
 
 ### 方式三：生产环境部署（推荐使用 Docker Compose）
 
-生产环境推荐使用 Docker Compose 进行部署，可以更好地管理服务依赖和配置。
+生产环境推荐使用官方提供的 Docker Compose 文件，一次性启动 **api**、**controller** 和 **frontend** 三个服务。
 
-#### 快速启动（开发/测试环境）
+#### 步骤 1：准备 Docker 和 Docker Compose
 
-如果您在开发或测试环境中，可以直接使用项目中的 Docker Compose 配置：
+在目标服务器上安装 Docker（>= 20.10）和 Docker Compose（>= 2.0）。
+
+#### 步骤 2：下载最新的 `docker-compose.yml`
+
+在服务器上创建部署目录（例如 `/opt/pvesphere`），然后下载最新的生产环境 Compose 文件。  
+通常需要使用 `sudo` 创建 `/opt/pvesphere`，并将目录所有者切换为当前登录用户：
 
 ```bash
-# 1. 准备前端代码（前端构建仅支持本地代码）
-cd deploy
-./build.sh -f /path/to/pvesphere-ui
-# 或使用默认路径
-./build.sh
+sudo mkdir -p /opt/pvesphere
+sudo chown -R "$USER":"$USER" /opt/pvesphere
+cd /opt/pvesphere
 
-# 2. 启动所有服务
-cd docker-compose
+# 下载最新的生产 docker-compose 文件
+curl -o docker-compose.yml \
+  https://raw.githubusercontent.com/pvesphere/pvesphere/main/deploy/docker-compose/docker-compose.prod.yml
+```
+
+该文件定义了 `api`、`controller`、`frontend` 三个服务，使用的镜像为：
+
+- `pvesphere/pvesphere-api:latest`
+- `pvesphere/pvesphere-controller:latest`
+- `pvesphere/pvesphere-frontend:latest`
+
+如果这些镜像已发布到镜像仓库，Docker 会自动拉取；否则需要提前在 CI/开发环境中构建并推送。
+
+#### 步骤 3：准备配置文件和本地目录
+
+根据 Compose 文件中的挂载路径，创建配置和数据目录，并下载后端配置文件（具体字段说明见 [配置说明](./configuration.md)）：
+
+```bash
+# 创建目录
+mkdir -p ./config/api ./config/controller ./storage/logs
+
+# 下载后端配置作为模板
+curl -o ./docker.yml \
+  https://raw.githubusercontent.com/pvesphere/pvesphere/main/config/prod.yml
+
+# 复制一份分别给 api 和 controller 使用
+cp ./docker.yml ./config/api/docker.yml
+cp ./docker.yml ./config/controller/docker.yml
+```
+
+然后分别编辑 `./config/api/docker.yml` 和 `./config/controller/docker.yml`：
+
+- 在 **`./config/api/docker.yml`** 中，将 `log.log_file_name` 设置为 `./storage/logs/api.log`
+- 在 **`./config/controller/docker.yml`** 中，将 `log.log_file_name` 设置为 `./storage/logs/controller.log`
+
+并根据实际环境修改数据库、Redis 等配置。
+
+#### 步骤 4：启动服务
+
+在 `/opt/pvesphere` 目录下执行：
+
+```bash
+cd /opt/pvesphere
 docker-compose up -d
+docker-compose ps
 ```
 
-**访问地址**：
-- **前端**: http://localhost:8080
-- **API**: http://localhost:8000
-- **API 文档**: http://localhost:8000/swagger/index.html
+服务启动后，可以通过以下地址访问：
 
-**服务说明**：
+- **前端**：`http://localhost:8080`
+- **API**：`http://localhost:8000`
+- **API 文档**：`http://localhost:8000/swagger/index.html`
 
-| 服务 | 端口 | 说明 |
-|------|------|------|
-| api | 8000 | API 服务，启动时自动执行数据库迁移 |
-| controller | - | 控制器服务，负责 PVE 资源同步 |
-| frontend | 8080 | 前端服务，使用本地代码构建 |
-
-#### 生产环境部署步骤
-
-**前置准备**：
-
-1. **构建镜像**（在开发环境或 CI/CD 中）：
-   ```bash
-   cd deploy/docker-compose
-   docker-compose build
-   ```
-   然后将镜像推送到镜像仓库，或在生产服务器上使用 `docker save` / `docker load` 传输。
-
-2. **创建目录结构**（在生产服务器上，以 `/opt/pvesphere` 为例）：
-   ```bash
-   mkdir -p /opt/pvesphere/{config/{api,controller},storage/logs}
-   ```
-
-3. **复制配置文件**：
-   ```bash
-   # 复制生产 docker-compose 配置
-   cp deploy/docker-compose/docker-compose.prod.yml /opt/pvesphere/docker-compose.yml
-   
-   # 复制服务配置文件（分别用于 API 和 Controller）
-   cp config/docker.yml /opt/pvesphere/config/api/docker.yml
-   cp config/docker.yml /opt/pvesphere/config/controller/docker.yml
-   ```
-
-4. **修改生产配置**（根据实际需求）：
-   - 编辑 `/opt/pvesphere/config/api/docker.yml`：配置 API 服务（端口、数据库、日志级别等）
-   - 编辑 `/opt/pvesphere/config/controller/docker.yml`：配置 Controller 服务
-
-5. **启动服务**：
-   ```bash
-   cd /opt/pvesphere
-   docker-compose up -d
-   ```
-
-6. **查看状态和日志**：
-   ```bash
-   # 查看服务状态
-   docker-compose ps
-   
-   # 查看日志
-   docker-compose logs -f api
-   docker-compose logs -f controller
-   docker-compose logs -f frontend
-   ```
-
-**目录结构**：
-
-```
-/opt/pvesphere/
-├── docker-compose.yml          # 生产环境配置（从 deploy/docker-compose/docker-compose.prod.yml 复制）
-├── config/                     # 配置文件目录
-│   ├── api/
-│   │   └── docker.yml          # API 服务配置
-│   └── controller/
-│       └── docker.yml          # Controller 服务配置
-└── storage/                    # 数据目录（自动创建）
-    ├── pvesphere-test.db       # SQLite 数据库（运行后自动生成）
-    └── logs/                   # 日志目录
-        ├── server.log          # API 服务日志
-        ├── controller.log      # Controller 服务日志
-        ├── access.log          # Nginx 访问日志
-        └── error.log           # Nginx 错误日志
-```
-
-**数据备份**：
-
-所有数据（SQLite 数据库、日志）都位于 `storage` 目录下：
+如需备份，只需打包 `storage` 目录即可：
 
 ```bash
 cd /opt/pvesphere
 tar czf pvesphere-backup-$(date +%F).tar.gz storage
 ```
-
-**常用命令**：
-
-```bash
-# 启动服务
-docker-compose up -d
-
-# 停止服务
-docker-compose down
-
-# 重启服务
-docker-compose restart
-
-# 查看日志
-docker-compose logs -f [service_name]
-```
-
-详细的部署说明请参考后端项目的 [deploy/README.md](https://github.com/pvesphere/pvesphere/tree/main/deploy/README.md) 文件。
 
 ## 下一步
 

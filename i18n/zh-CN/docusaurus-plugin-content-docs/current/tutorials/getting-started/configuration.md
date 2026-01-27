@@ -4,86 +4,90 @@
 
 ## 后端配置
 
-后端配置文件位于 `config/` 目录，支持以下环境：
+后端配置文件位于后端项目的 `config/` 目录：
 
-- `local.yml` - 本地开发环境
-- `docker.yml` - Docker 环境
-- `prod.yml` - 生产环境
+- `local.yml`：本地开发环境
+- `docker.yml`：Docker / Docker Compose 环境
 
-### 数据库配置
+配置结构**必须**与后端实际配置文件保持一致，否则会出现  
+`panic: unknown db driver` 等错误（参考 [pvesphere/pvesphere#3](https://github.com/pvesphere/pvesphere/issues/3)）。
 
-```yaml
-database:
-  driver: mysql  # mysql, postgres, sqlite
-  host: localhost
-  port: 3306
-  database: pvesphere
-  username: root
-  password: your_password
-  charset: utf8mb4
-```
+### Docker / Docker Compose（`docker.yml`）
 
-### Redis 配置（可选）
+下面是基于后端 `config/docker.yml` 的简化示例：
 
 ```yaml
-redis:
-  host: localhost
-  port: 6379
-  password: ""
-  db: 0
+env: docker
+
+http:
+  host: 0.0.0.0
+  port: 8000
+
+security:
+  api_sign:
+    app_key: your-api-key
+    app_security: your-api-security
+  jwt:
+    key: your-jwt-secret-key-minimum-32-characters
+
+data:
+  db:
+    user:
+      # 支持 sqlite、mysql、postgres
+      driver: sqlite
+      dsn: storage/pvesphere-test.db?_busy_timeout=5000&_journal_mode=WAL
+log:
+  log_level: info
+  mode: both
+  encoding: console
+  log_file_name: "./storage/logs/server.log"
 ```
 
-### JWT 配置
+关键点：
+
+- 数据库在 `data.db.user.driver` 和 `data.db.user.dsn` 下配置，**没有 `database` 根节点**；  
+  后端也**不会读取** `DB_HOST` 这类环境变量。
+- JWT 与接口签名配置都在 `security.jwt.key`、`security.api_sign.*` 下。
+
+### 本地开发（`local.yml`）
+
+本地配置与 Docker 结构一致，只是默认值有所不同：
 
 ```yaml
-jwt:
-  secret: your-secret-key
-  expire: 720h  # token 过期时间
+env: local
+
+http:
+  host: 127.0.0.1
+  port: 8000
+
+security:
+  api_sign:
+    app_key: 123456
+    app_security: 123456
+  jwt:
+    key: local-dev-jwt-key-change-me
+
+data:
+  db:
+    user:
+      driver: sqlite
+      dsn: storage/pvesphere-test.db?_busy_timeout=5000
+  redis:
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 0
+
+log:
+  log_level: debug
+  mode: both
+  encoding: console
+  log_file_name: "./storage/logs/server.log"
 ```
 
-### 服务器配置
+如有不确定，可以直接从后端仓库中复制并按需修改：
 
-```yaml
-server:
-  http:
-    port: 8000
-    mode: debug  # debug, release
-```
-
-## 前端配置
-
-前端配置文件位于 `src/config/index.ts`。
-
-### API 地址配置
-
-```typescript
-export default {
-  baseURL: import.meta.env.VITE_APP_BASE_API || 'http://localhost:8000',
-  // ...
-};
-```
-
-## 环境变量
-
-### 后端
-
-可以通过环境变量覆盖配置：
-
-```bash
-export DB_HOST=localhost
-export DB_PORT=3306
-export DB_USER=root
-export DB_PASSWORD=your_password
-```
-
-### 前端
-
-创建 `.env` 文件：
-
-```env
-VITE_APP_BASE_API=http://localhost:8000
-VITE_APP_TITLE=PveSphere
-```
+- `config/docker.yml`
+- `config/local.yml`
 
 ## 下一步
 

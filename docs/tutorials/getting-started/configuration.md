@@ -4,86 +4,87 @@ This document describes how to configure the PveSphere system.
 
 ## Backend Configuration
 
-Backend configuration files are located in the `config/` directory, supporting the following environments:
+Backend configuration files live in the backend project under the `config/` directory:
 
-- `local.yml` - Local development environment
-- `docker.yml` - Docker environment
-- `prod.yml` - Production environment
+- `local.yml` – local development
+- `docker.yml` – Docker / Docker Compose
 
-### Database Configuration
+The structure **must** match the backend config files; otherwise you can hit errors like  
+`panic: unknown db driver` as described in [pvesphere/pvesphere#3](https://github.com/pvesphere/pvesphere/issues/3).
 
-```yaml
-database:
-  driver: mysql  # mysql, postgres, sqlite
-  host: localhost
-  port: 3306
-  database: pvesphere
-  username: root
-  password: your_password
-  charset: utf8mb4
-```
+### Docker / Docker Compose (`docker.yml`)
 
-### Redis Configuration (Optional)
+Typical Docker configuration (simplified from `config/docker.yml`):
 
 ```yaml
-redis:
-  host: localhost
-  port: 6379
-  password: ""
-  db: 0
+env: docker
+
+http:
+  host: 0.0.0.0
+  port: 8000
+
+security:
+  api_sign:
+    app_key: your-api-key
+    app_security: your-api-security
+  jwt:
+    key: your-jwt-secret-key-minimum-32-characters
+
+data:
+  db:
+    user:
+      # sqlite, mysql, or postgres
+      driver: sqlite
+      dsn: storage/pvesphere-test.db?_busy_timeout=5000&_journal_mode=WAL
+
+log:
+  log_level: info
+  mode: both
+  encoding: console
+  log_file_name: "./storage/logs/server.log"
 ```
 
-### JWT Configuration
+Key points:
+
+- Database is configured under `data.db.user.driver` and `data.db.user.dsn`  
+  (there is **no** `database` root key and `DB_HOST`‑style env vars are **not** used).
+- JWT and API signing live under `security.jwt.key` and `security.api_sign.*`.
+
+### Local Development (`local.yml`)
+
+Local config uses the same structure, with a few defaults changed:
 
 ```yaml
-jwt:
-  secret: your-secret-key
-  expire: 720h  # token expiration time
+env: local
+
+http:
+  host: 127.0.0.1
+  port: 8000
+
+security:
+  api_sign:
+    app_key: 123456
+    app_security: 123456
+  jwt:
+    key: local-dev-jwt-key-change-me
+
+data:
+  db:
+    user:
+      driver: sqlite
+      dsn: storage/pvesphere-test.db?_busy_timeout=5000
+
+log:
+  log_level: debug
+  mode: both
+  encoding: console
+  log_file_name: "./storage/logs/server.log"
 ```
 
-### Server Configuration
+If you are unsure, you can always start from the sample files in the backend repository:
 
-```yaml
-server:
-  http:
-    port: 8000
-    mode: debug  # debug, release
-```
-
-## Frontend Configuration
-
-Frontend configuration file is located at `src/config/index.ts`.
-
-### API Address Configuration
-
-```typescript
-export default {
-  baseURL: import.meta.env.VITE_APP_BASE_API || 'http://localhost:8000',
-  // ...
-};
-```
-
-## Environment Variables
-
-### Backend
-
-You can override configuration with environment variables:
-
-```bash
-export DB_HOST=localhost
-export DB_PORT=3306
-export DB_USER=root
-export DB_PASSWORD=your_password
-```
-
-### Frontend
-
-Create a `.env` file:
-
-```env
-VITE_APP_BASE_API=http://localhost:8000
-VITE_APP_TITLE=PveSphere
-```
+- `config/docker.yml`
+- `config/local.yml`
 
 ## Next Steps
 

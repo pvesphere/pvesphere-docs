@@ -89,129 +89,81 @@ After running the database migration for the first time, the system will automat
 
 ### Method 3: Production Environment Deployment (Recommended: Docker Compose)
 
-For production environments, it is recommended to use Docker Compose for deployment, which provides better management of service dependencies and configurations.
+For production environments, PveSphere provides an official Docker Compose file that runs **api**, **controller** and **frontend** together.
 
-#### Quick Start (Development/Testing Environment)
+#### Step 1: Install Docker and Docker Compose
 
-If you are in a development or testing environment, you can directly use the Docker Compose configuration in the project:
+Make sure Docker (>= 20.10) and Docker Compose (>= 2.0) are installed on the target server.
+
+#### Step 2: Download the Latest `docker-compose.yml`
+
+Create a deployment directory (for example `/opt/pvesphere`) and download the latest production Compose file.  
+You typically need `sudo` to create `/opt/pvesphere`, and then change ownership to your current user:
 
 ```bash
-# 1. Prepare frontend code (frontend build only supports local code)
-cd deploy
-./build.sh -f /path/to/pvesphere-ui
-# Or use the default path
-./build.sh
+sudo mkdir -p /opt/pvesphere
+sudo chown -R "$USER":"$USER" /opt/pvesphere
+cd /opt/pvesphere
 
-# 2. Start all services
-cd docker-compose
+# Download the latest production docker-compose file
+curl -o docker-compose.yml \
+  https://raw.githubusercontent.com/pvesphere/pvesphere/main/deploy/docker-compose/docker-compose.prod.yml
+```
+
+This file defines the `api`, `controller`, and `frontend` services and uses the images:
+
+- `pvesphere/pvesphere-api:latest`
+- `pvesphere/pvesphere-controller:latest`
+- `pvesphere/pvesphere-frontend:latest`
+
+If these images are published to a registry, Docker will pull them automatically; otherwise, you need to build and push them in advance.
+
+#### Step 3: Prepare Configuration and Data Directories
+
+Create the configuration and storage directories required by the Compose file, then download and edit the backend config files (see [Configuration](./configuration.md) for details):
+
+```bash
+# Create directories
+mkdir -p ./config/api ./config/controller ./storage/logs
+
+# Download backend config as a starting point
+curl -o ./docker.yml \
+  https://raw.githubusercontent.com/pvesphere/pvesphere/main/config/prod.yml
+
+# Copy and then edit separately for api / controller
+cp ./docker.yml ./config/api/docker.yml
+cp ./docker.yml ./config/controller/docker.yml
+```
+
+Then edit `./config/api/docker.yml` and `./config/controller/docker.yml`:
+
+- In **`./config/api/docker.yml`**, set `log.log_file_name` to `./storage/logs/api.log`
+- In **`./config/controller/docker.yml`**, set `log.log_file_name` to `./storage/logs/controller.log`
+
+Adjust database, Redis and other settings as needed.
+
+#### Step 4: Start Services
+
+From `/opt/pvesphere`, start the stack:
+
+```bash
+cd /opt/pvesphere
 docker-compose up -d
+docker-compose ps
 ```
 
-**Access Addresses**:
-- **Frontend**: http://localhost:8080
-- **API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/swagger/index.html
+After startup:
 
-**Service Description**:
+- **Frontend**: `http://localhost:8080`
+- **API**: `http://localhost:8000`
+- **API Documentation**: `http://localhost:8000/swagger/index.html`
 
-| Service | Port | Description |
-|---------|------|-------------|
-| api | 8000 | API service, automatically executes database migration on startup |
-| controller | - | Controller service, responsible for PVE resource synchronization |
-| frontend | 8080 | Frontend service, built from local code |
-
-#### Production Environment Deployment Steps
-
-**Prerequisites**:
-
-1. **Build Images** (in development environment or CI/CD):
-   ```bash
-   cd deploy/docker-compose
-   docker-compose build
-   ```
-   Then push the images to a registry, or transfer them to the production server using `docker save` / `docker load`.
-
-2. **Create Directory Structure** (on production server, using `/opt/pvesphere` as an example):
-   ```bash
-   mkdir -p /opt/pvesphere/{config/{api,controller},storage/logs}
-   ```
-
-3. **Copy Configuration Files**:
-   ```bash
-   # Copy production docker-compose configuration
-   cp deploy/docker-compose/docker-compose.prod.yml /opt/pvesphere/docker-compose.yml
-   
-   # Copy service configuration files (separate for API and Controller)
-   cp config/docker.yml /opt/pvesphere/config/api/docker.yml
-   cp config/docker.yml /opt/pvesphere/config/controller/docker.yml
-   ```
-
-4. **Modify Production Configuration** (according to actual needs):
-   - Edit `/opt/pvesphere/config/api/docker.yml`: Configure API service (port, database, log level, etc.)
-   - Edit `/opt/pvesphere/config/controller/docker.yml`: Configure Controller service
-
-5. **Start Services**:
-   ```bash
-   cd /opt/pvesphere
-   docker-compose up -d
-   ```
-
-6. **View Status and Logs**:
-   ```bash
-   # View service status
-   docker-compose ps
-   
-   # View logs
-   docker-compose logs -f api
-   docker-compose logs -f controller
-   docker-compose logs -f frontend
-   ```
-
-**Directory Structure**:
-
-```
-/opt/pvesphere/
-├── docker-compose.yml          # Production configuration (copy from deploy/docker-compose/docker-compose.prod.yml)
-├── config/                     # Configuration directory
-│   ├── api/
-│   │   └── docker.yml          # API service configuration
-│   └── controller/
-│       └── docker.yml          # Controller service configuration
-└── storage/                    # Data directory (auto-created)
-    ├── pvesphere-test.db       # SQLite database (auto-generated after running)
-    └── logs/                   # Log directory
-        ├── server.log          # API service logs
-        ├── controller.log      # Controller service logs
-        ├── access.log          # Nginx access logs
-        └── error.log           # Nginx error logs
-```
-
-**Data Backup**:
-
-All data (SQLite database, logs) are located in the `storage` directory:
+For backup, you can archive the `storage` directory:
 
 ```bash
 cd /opt/pvesphere
 tar czf pvesphere-backup-$(date +%F).tar.gz storage
 ```
-
-**Common Commands**:
-
-```bash
-# Start services
-docker-compose up -d
-
-# Stop services
-docker-compose down
-
-# Restart services
-docker-compose restart
-
-# View logs
-docker-compose logs -f [service_name]
-```
-
-For detailed deployment instructions, please refer to the [deploy/README.md](https://github.com/pvesphere/pvesphere/tree/main/deploy/README.md) file in the backend project.
 
 ## Next Steps
 
